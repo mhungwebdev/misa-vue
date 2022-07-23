@@ -1,0 +1,33 @@
+.notFoundPage {
+    position:fixed;
+    width:100%;
+    height:100vh;
+    z-index: 99;
+    background-color:#fff;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+}
+
+.notFoundPage > div:first-child {
+    font-size:160px;
+    font-weight: bold;
+    color:red;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.notFoundPage > div:last-child {
+    font-size:16px;
+    font-weight: 600;
+}
+
+.notFoundPage > div:last-child a {
+    font-weight: 400;
+    text-decoration: underline;
+    color:#35bf22
+}

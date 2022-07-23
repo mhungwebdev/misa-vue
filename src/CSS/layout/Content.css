@@ -1,0 +1,9 @@
+.misa-content-wrapper{
+    position: relative;
+    width: calc(100% - var(--width-slideBar));
+    transition: all .1s linear
+}
+
+.misa-slidebar-hired .misa-content-wrapper {
+    width: calc(100% - 42px)
+}

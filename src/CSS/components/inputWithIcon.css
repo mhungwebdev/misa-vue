@@ -1,0 +1,29 @@
+.misa-input-with-icon-wrapper{
+    height: var(--input-height);
+    border:1px solid #babec5;
+    border-radius:var(--border-radius-input);
+    display:flex;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+    width: 240px;
+}
+
+.misa-input-with-icon{
+    outline: none;
+    height: calc(var(--input-height));
+    line-height: calc(var(--input-height));
+    border: none;
+    box-sizing: border-box; 
+    text-indent: 10px;
+    min-width: 200px;
+}
+
+.misa-icon-input{
+    background-repeat: no-repeat;
+    background-position: -992px -360px;
+    margin: 0px 12px 0px 10px;
+    width: 16px;
+	height: 16px;
+    cursor: pointer;
+}

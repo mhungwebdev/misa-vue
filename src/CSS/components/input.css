@@ -1,0 +1,21 @@
+.misa-input-wrapper {
+    position: relative;
+    box-sizing: border-box;
+    display: inline-block;
+}
+
+.misa-input {
+    outline: none;
+    height: calc(var(--input-height));
+    line-height: calc(var(--input-height));
+    border: 1px solid #babec5;
+    box-sizing: border-box; 
+    text-indent: 10px;
+    border-radius:var(--border-radius-input);
+    width: 100%;
+    padding-right: 8px;
+}
+
+.misa-input:focus {
+    border-color: var(--border-color-focus);
+}

@@ -1,0 +1,50 @@
+@keyframes show {
+    from {
+        transform: scale(0);
+        opacity: 0
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1
+    }
+}
+
+.misa-dialog-bg{
+    width: 100%;
+    height: 100vh;
+    position:absolute;
+    background: rgba(0, 0, 0,.5);
+    z-index: 4;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.misa-dialog-wrapper{
+    background-color: #fff;
+    padding:20px 32px;
+    box-sizing: border-box;
+    border-radius:2px;
+    position:relative;
+    transition: all 0.5s;
+    animation: show 0.3s ease-in;
+}
+
+.misa-dialog-icon{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display:flex;
+}
+
+.misa-dialog-icon-question{
+    margin-right: 10px;
+    background-position: -88px -144px;
+}
+
+.misa-dialog-icon-close{
+    background-position: -144px -144px;
+    cursor: pointer;
+    position: relative;
+}

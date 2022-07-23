@@ -1,0 +1,132 @@
+#misa-form-employee{
+    width: 100%;
+    height: 100vh;
+    position:fixed;
+    background: rgba(0, 0, 0,.5);
+    z-index: 4;
+    /* display:none; */
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.misa-form-employee-header{
+    display: flex;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+.misa-form-employee-title{
+    font-size: 24px;
+    color: #111;
+    font-weight: 700;
+    margin-right: 20px;
+}
+
+.misa-form-employee-header-options{
+    display: flex;
+    align-items: center;
+}
+
+.misa-form-employee-header-option{
+    display: flex;
+    align-items: center;
+    margin-right: 32px;
+}
+
+.misa-form-employee-header-option > div:last-child{
+    margin-left: 8px;
+}
+
+.misa-form-employee-info-general{
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.misa-form-employee-info-left{
+    margin-right:32px
+}
+
+.misa-form-employee-field-gr{
+    display: flex;
+    margin-bottom: 8px;
+    align-items: center;
+}
+
+.misa-form-employee-field-gr > div {
+    margin-right:6px
+}
+
+.misa-form-employee-field-gr > div:last-child {
+    margin-right:0px
+}
+
+.misa-form-employee-info-right{
+
+}
+
+.misa-form-employee-contact{
+
+}
+
+.misa-field392 {
+    width:392px !important;
+    margin-right:0px !important
+}
+
+.misa-field160 {
+    width: 160px !important;
+}
+
+.misa-field226 {
+    width:226px !important;
+}
+
+.misa-field816 {
+    width:816px !important;
+}
+
+.misa-form-employee-line {
+    margin-top: 32px;
+    margin-bottom: 20px;
+    border-top: 1px solid #bbb
+}
+
+.misa-form-employee-button-gr{
+    display: flex;
+    align-items: center;
+    justify-content:space-between
+}
+
+.misa-form-employee-button-left{
+
+}
+
+.misa-form-employee-button-right{
+    display: flex;
+}
+
+.misa-form-employee-button-right > div:first-child {
+    margin-right: 8px;
+}
+
+.misa-icon-tooltip {
+    position: absolute;
+    top: 80%;
+    left: -40px;
+    background-color: rgb(94, 94, 94);
+    color: #fff;
+    height:25px;
+    line-height: 25px;
+    padding:0px 8px;
+    display: none;
+    border-radius: 4px;;
+    white-space: nowrap;
+}
+
+.misa-dialog-icon-close:hover .misa-icon-tooltip {
+    display: block
+}

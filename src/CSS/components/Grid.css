@@ -1,0 +1,68 @@
+.misa-grid-wrapper {
+    max-width:100%;
+    width: 100%;
+    height: 100vh;
+    padding-top:48px;
+    box-sizing: border-box;
+    overflow:unset;
+    scroll-behavior: smooth;
+    position: relative;
+    padding-left: 20px;
+    background-color: #eceef1;
+}
+
+.misa-grid-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding: 24px 30px 11px 20px;
+    position:absolute;
+    width: 100%;
+    box-sizing: border-box;
+    left: 0;
+    top: 48px;
+    z-index: 1;
+}
+
+.misa-grid-title{
+    font-size: 24px;
+    font-weight: 700;
+    color: #111;
+}
+
+.misa-grid{
+    max-width: 100%;
+    width: calc(100%);
+    height: calc(100vh - 48px);
+    padding-top:69px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding-right: 30px;
+}
+
+.misa-grid-func{ 
+    display: flex;
+    justify-content: flex-end;
+    background-color: #fff;
+    padding: 16px;
+    align-items: center;
+    z-index: 3;
+}
+
+.misa-grid-reload {
+    background-position:-1098px -88px;
+    cursor: pointer;
+    margin-left:12px
+}
+
+.misa-grid-table{
+    flex: 1;
+    width:100%;
+    overflow: unset;
+    box-sizing: border-box;
+    background-color: #fff;
+    border-left: 16px solid transparent;
+    border-right: 16px solid transparent;
+    height:calc(100% - 66px - 56px)
+}

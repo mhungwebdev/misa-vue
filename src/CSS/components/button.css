@@ -1,0 +1,54 @@
+.misa-button-default {
+    color: #fff;
+    background-color: #2ca01c;
+    padding:0px 10px;
+    /* display: inline-block; */
+    position: relative;
+}
+
+.misa-button-default:hover{
+    background-color: #35bf22;
+}
+
+.misa-button-default:active{
+    background-color: #248b15;
+}
+
+.misa-button-outline {
+    border:1px solid #8d9096;
+    box-sizing: border-box;
+    display: inline-block;
+}
+
+.misa-button-outline:hover{
+    background-color:#d2d3d6
+}
+
+.misa-button-outline:active{
+    background-color:#bbbcbc
+}
+
+.misa-button {
+    position: relative;
+}
+
+.misa-btn-tooltip {
+    position: absolute;
+    top: 80%;
+    left: -10px;
+    background-color: rgb(85, 85, 85);
+    white-space: nowrap;
+    height:24px;
+    text-align: center;
+    line-height: 24px;
+    padding:0px 8px;
+    display:none;
+    color: #fff;
+    box-sizing: border-box;
+    border-radius: 2px;
+    font-size: 12px;
+}
+
+.misa-button:hover .misa-btn-tooltip {
+    display:block;
+}

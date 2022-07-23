@@ -1,0 +1,13 @@
+.misa-button-outline {
+    border:1px solid #8d9096;
+    box-sizing: border-box;
+    display: inline-block;
+}
+
+.misa-button-outline:hover{
+    background-color:#d2d3d6
+}
+
+.misa-button-outline:active{
+    background-color:#bbbcbc
+}

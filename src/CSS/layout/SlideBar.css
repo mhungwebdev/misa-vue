@@ -1,0 +1,162 @@
+.misa-slidebar-wrapper {
+    width: var(--width-slideBar);
+    background-color: var(--color-bg-slideBar);
+    height: 100vh;
+    transition:all .1s linear;
+}
+
+.misa-slidebar-hired .misa-slidebar-wrapper {
+    width: 42px;
+}
+
+.misa-slidebar-header{
+    height:var(--heigh-header);
+    display: flex;
+    align-items: center;
+    padding:24px;
+    box-sizing: border-box;
+}
+
+.misa-slidebar-header-icon{
+    background-position: -424px -86px;
+    width:24px;
+    height:24px;
+    margin-right: 10px;
+}
+
+.misa-slidebar-hired .misa-slidebar-header {
+    padding:0px
+}
+
+.misa-slidebar-hired .misa-slidebar-header-icon {
+    margin-left:9px;
+    background-position: -842px -30px;
+    cursor: pointer;
+}
+
+.misa-slidebar-header-logo{
+    height:32px;
+    background-image: url(../../assets/Resource/img/Logo_Module_TiengViet_White.66947422.svg);
+    background-repeat:no-repeat;
+    background-size:contain;
+    flex:1;
+    background-position: center;
+    transition: all 0.1s linear;
+}
+
+.misa-slidebar-list{
+    color: #fff;
+    padding-top: 14px;
+    width: 100%;
+    height:calc(100% - 48px);
+    box-sizing: border-box;
+}
+
+.misa-slidebar-item{
+    display:flex;
+    align-items: center;
+    padding-right:14px;
+    height:42px;
+    line-height:42px;
+    cursor: pointer;
+    padding-left:8px;
+    border-left: 6px solid transparent;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.misa-slidebar-item .misa-slidebar-item-icon{
+    opacity: 0.5;
+}
+
+.misa-slidebar-hired:hover {
+    background-color: rgba(212, 215, 220,.2);
+    opacity: 1;
+}
+
+.misa-slidebar-item-icon{
+    margin-right:8px
+}
+
+.misa-slidebar-item-text{
+    flex:1;
+    white-space: nowrap;
+    color:#fff
+}
+
+.misa-icon-overview{
+    background-position: -33px -1586px;
+}
+
+.misa-icon-cash{
+    background-position: -78px -1586px;
+}
+
+.misa-icon-deposits{
+    background-position: -121px -1586px;
+}
+
+.misa-icon-buy{
+    background-position: -165px -1586px;
+}
+
+.misa-icon-sell{
+    background-position: -206px -1586px;
+}
+
+.misa-icon-manage-bill{
+    background-position: -254px -1586px;
+}
+
+.misa-icon-warehouse{
+    background-position: -294px -1586px;
+}
+
+.misa-icon-tool{
+    background-position: -339px -1586px;
+}
+
+.misa-icon-fixed-assets{
+    background-position: -382px -1586px;
+}
+
+.misa-icon-tax{
+    background-position: -427px -1586px;
+}
+
+.misa-icon-price{
+    background-position: -471px -1586px;
+}
+
+.misa-icon-aggregate{
+    background-position: -514px -1586px;
+}
+
+.misa-icon-budget{
+    background-position:-427px -1660px;
+}
+
+.misa-icon-report{
+    background-position: -552px -1588px;
+}
+
+.misa-icon-financial-analysis{
+    background-position: -251px -1662px;
+}
+
+.router-link-active .misa-slidebar-item {
+    border-left-color:#2ca01c;
+    background-color: rgba(212, 215, 220,.2);
+}
+
+.router-link-active .misa-slidebar-item-icon, .router-link-active .misa-slidebar-item-text{
+    opacity: 1;
+    font-weight:700;
+}
+
+.misa-slidebar-item:hover .misa-tooltip {
+    display: block;
+    background-color: rgb(68, 68, 68);
+    font-size:12px;
+    border-radius:2px
+}

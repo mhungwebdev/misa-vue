@@ -1,0 +1,73 @@
+.misa-popup-wrapper{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    z-index: 99;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color:rgba(0, 0, 0,.5);
+}
+
+.misa-popup-wrapper > div {
+    border: 1px solid var(--color-border);
+    border-radius:2px;
+    padding:24px;
+    width:400px;
+    background-color: #fff;
+}
+
+.misa-popup-content{
+    padding-bottom:24px;
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom:16px;
+    display:flex;
+    align-items:flex-start;
+}
+
+.misa-popup-icon{
+    background-position: -598px -463px;
+    min-width: 36px;
+	min-height: 37px;
+}
+
+.misa-popup-text{
+    margin-top:4px;
+    margin-left: 16px;
+}
+
+.misa-popup-button{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.misa-popup-button > div:first-child{
+    margin-right: 8px;
+}
+
+.misa-popup-button > div:last-child{
+    margin-right: 0px;
+}
+
+.misa-popup-confirm-button {
+    display: flex;
+    justify-content:space-between;
+}
+
+.misa-popup-confirm-form-button {
+    justify-content:space-between;
+}
+
+.misa-popup-confirm-form-button > div:last-child {
+    display: flex;
+}
+
+.misa-popup-confirm-form-button > div:last-child > div:first-child {
+    margin-right:8px
+}
+
+.misa-popup-icon-confirm-form {
+    background-position: -832px -462px;
+}

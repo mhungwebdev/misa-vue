@@ -1,0 +1,22 @@
+.misa-table-menu-context{
+    min-width:120px;
+    max-width: 120px;
+    width: 120px;
+    border:1px solid #8d9096;
+    background-color: #fff;
+    position:fixed;
+    z-index: 6;
+}
+
+.misa-table-menu-context-item{
+    cursor: pointer;
+    height: 32px;
+    line-height: 32px;
+    padding-left: 10px;
+    color: #333;
+}
+
+.misa-table-menu-context-item:hover {
+    background-color: #d2d3d6;
+    color:#35bf22
+}

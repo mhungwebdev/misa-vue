@@ -1,0 +1,76 @@
+.misa-content-header {
+    width: 100%;
+    height: var(--heigh-header);
+    background-color:#fff;
+    position:absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding:0px 20px 0px 10px;
+    box-sizing: border-box;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.misa-content-header-left{
+    display: flex;
+    align-items: center;
+}
+
+.misa-content-header-icon-toggle{
+    background-position: -847px -30px;
+    cursor: pointer;
+    margin-right:10px;
+    transition: all .5s;
+}
+
+.misa-slidebar-hired .misa-content-header-icon-toggle{
+    display:none;
+}
+
+.misa-content-header-company-name{
+    font-size: 14px;
+    font-weight:600;
+    white-space: nowrap;
+}
+
+.misa-content-header-left-arrow{
+    background-position: -1125px -356px;
+    cursor: pointer;
+    margin-left:10px
+}
+
+.misa-content-header-right{
+    display: flex;
+    align-items: center;
+}
+
+.misa-content-header-bell{
+    background-position: -788px -30px;
+    cursor: pointer;
+    margin-right: 16px;
+}
+
+.misa-content-header-avatar{
+    background-position: -352px -894px;
+    height:32px;
+    width:32px;
+    min-height: 32px;
+    min-width: 32px;
+    border-radius:50%;;
+    margin-right: 4px;
+}
+
+.misa-content-header-name{
+    font-size: 14px;
+    font-weight:600;
+    white-space: nowrap;
+    margin-right:10px
+}
+
+.misa-content-header-right-arrow{
+    background-position: -1125px -356px;
+    cursor: pointer;
+}
