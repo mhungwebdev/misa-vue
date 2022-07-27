@@ -162,10 +162,10 @@ import BasePopup from "../components/Base/BasePopup.vue"
              * Author : Lê Mạnh Hùng (15/7/2022)
              * @param {*} state trạng thái của form (true-hiện, false-ẩn)
              */
-            setStateForm(state){
-                this.EmployeeFormStore.isShowForm = state
-
+            async setStateForm(state){
                 this.EmployeeFormStore.formMode = FormMode.FORM_ADD
+                await this.EmployeeFormStore.initForm()
+                this.EmployeeFormStore.isShowForm = state
             },
 
             /**

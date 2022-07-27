@@ -6,9 +6,10 @@
             ref="input" 
             :autocomplete="true" 
             :tabindex="tabIndex" 
-            type="text" 
+            :type="type ? type : 'text'" 
             :class="{'misa-input':true,'misa-field-error':error}" 
             @blur="handleBlur(value,fieldName)"
+            min="0"
         />
         <div v-if="error" class="misa-input-msg-error">{{error}}</div>
     </div>
@@ -35,6 +36,7 @@
             error:String,
             //Hàm xử lý blur
             handleBlur:Function,
+            type:String
         },
         mounted(){
             if(this.autoFocus)

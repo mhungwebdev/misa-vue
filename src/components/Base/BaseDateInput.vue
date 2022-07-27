@@ -18,6 +18,8 @@
                 @click="handleChangeValue"
                 class="misa-date-picker" 
                 :current-value="Date.now()"
+                locale="vi"
+                :dayNamesShorter="['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN']"
             />
         </span>
         <div v-if="error" class="misa-input-msg-error">{{error}}</div>

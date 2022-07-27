@@ -8,6 +8,7 @@ const router = createRouter({
   routes: [
     {path:'/employees',component:EmployeePage},
     { path:'/customers',component:CustomerPage},
+    {path:'/', redirect:'/employees'},
     { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound },
   ]
 })

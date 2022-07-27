@@ -117,6 +117,7 @@
                                 :changeValue="EmployeeFormStore.changeValue"
                                 :error="EmployeeFormStore.getError.IdentityNumber"
                                 :handleBlur="EmployeeFormStore.validate"
+                                :type="'number'"
                             />
                             <BaseDateInput 
                                 :tabIndex="8" 
@@ -172,8 +173,15 @@
                             :changeValue="EmployeeFormStore.changeValue"
                             :error="EmployeeFormStore.getError.PhoneNumber"
                             :handleBlur="EmployeeFormStore.validate"
+                            :type="'number'"
                         />
-                        <BaseInput class="misa-field160" :fieldRequire="false" :tabIndex="12" :label="'DT Cố định'"/>
+                        <BaseInput 
+                            class="misa-field160" 
+                            :fieldRequire="false" 
+                            :tabIndex="12" 
+                            :label="'DT Cố định'"
+                            :type="'number'"
+                        />
                         <BaseInput 
                             class="misa-field160" 
                             :fieldRequire="false" 
@@ -188,7 +196,13 @@
                     </div>
 
                     <div class="misa-form-employee-field-gr">
-                        <BaseInput class="misa-field160" :fieldRequire="false" :tabIndex="14" :label="'Tài khoản ngân hàng'" />
+                        <BaseInput 
+                            class="misa-field160" 
+                            :fieldRequire="false" 
+                            :tabIndex="14" 
+                            :label="'Tài khoản ngân hàng'" 
+                            :type="'number'"
+                        />
                         <BaseInput class="misa-field160" :fieldRequire="false" :tabIndex="15" :label="'Tên ngân hàng'"/>
                         <BaseInput class="misa-field160" :fieldRequire="false" :tabIndex="16" :label="'Chi nhánh'" />
                     </div>
@@ -248,7 +262,6 @@ import BasePopup from '../components/Base/BasePopup.vue';
         const EmployeeFormStore = employeeFormStore()
         //store của page nhân viên
         const EmployeeStore = employeeStore()
-        EmployeeFormStore.initForm()
 
         return {
             api,

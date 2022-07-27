@@ -60,9 +60,10 @@ export const employeeFormStore = defineStore({
     changeValue(value, fieldName) {
         this.employee[fieldName] = value;
 
-        if(value != "" && this.validate(value,fieldName)) {
-            this.error[fieldName] = ""
-        }
+        // if(value != "" && this.validate(value,fieldName)) {
+        //     this.error[fieldName] = ""
+        // }
+        this.error[fieldName] = "";
 
         if(fieldName != 'EmployeeCode' && fieldName != 'FullName' && fieldName != 'DepartmentId' && value == ""){
             this.error[fieldName] = ""
