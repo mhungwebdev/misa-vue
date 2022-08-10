@@ -6,6 +6,12 @@
     position: relative;
 }
 
+.misa-button-label {
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
 .misa-button-default:hover{
     background-color: #35bf22;
 }
@@ -18,6 +24,8 @@
     border:1px solid #8d9096;
     box-sizing: border-box;
     display: inline-block;
+    font-size: 13px;
+    font-weight: 600;
 }
 
 .misa-button-outline:hover{

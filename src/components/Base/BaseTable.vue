@@ -16,10 +16,11 @@
           >
             {{ field["fieldDisplay"] }}
           </th>
-          <th class="misa-text-center">Chức năng</th>
+          <th class="misa-text-center">CHỨC NĂNG</th>
         </tr>
       </thead>
 
+      <div class="misa-table-empty" v-if="data.length == 0">Trống</div>
       <tbody>
         <tr
           @dblclick="showFormEdit(row[idRow])"

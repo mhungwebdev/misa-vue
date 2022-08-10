@@ -1,20 +1,3 @@
-/* @import url(../CSS/components/button.css);
-@import url(../CSS/components/buttonOutline.css);
-@import url(../CSS/components/inputWithIcon.css);
-@import url(../CSS/components/input.css);
-@import url(../CSS/components/checkbox.css);
-@import url(../CSS/components/radioGroup.css);
-@import url(../CSS/components/dropdown.css);
-@import url(../CSS/components/dateInput.css);
-@import url(../CSS/components/popup.css);
-@import url(../CSS/components/table.css);
-@import url(../CSS/layout/SlideBar.css);
-@import url(../CSS/layout/Content.css);
-@import url(../CSS/components/dialog.css);
-@import url(../CSS/form/employee.css);
-@import url(../CSS/components/loading.css); */
-@import 'v-calendar/dist/style.css';
-
 @font-face {
     font-family: NotoSans;
     src: url(../assets/Resource/fonts/notosans-regular.2cb88a13.woff2);
@@ -71,16 +54,33 @@ input {
 
 .misa-button {
     border-radius: var(--border-radius-btn);
-    height: var(--primary-button-height);
-    line-height: var(--primary-button-height);
+    /* height: var(--primary-button-height); */
+    /* line-height: var(--primary-button-height); */
     min-width: 60px;
     text-align: center;
     cursor: pointer;
+    padding:8px 16px !important
 }
 
 .misa-icon {
     background-image: url(../assets/Resource/img/Sprites.64af8f61.svg);
     background-repeat: no-repeat;
+}
+
+.misa-icon-error {
+    background-position: -752px -462px;
+    width:36px;
+    height:36px;
+    min-width: 36px;
+    min-height: 36px;
+}
+
+.misa-icon-success {
+    background-position: -990px -462px;
+    width:36px;
+    height:36px;
+    min-width: 36px;
+    min-height: 36px;
 }
 
 .misa-field-focus {
@@ -124,17 +124,31 @@ input {
 }
 
 .misa-input-msg-error{
-    background-color:#000;
+    background-color:#FF7777;
     color:#fff;
     text-align: center;
     position:absolute;
-    bottom:0;
+    top:calc(100% + 6px);
     left:50%;
     white-space: nowrap;
-    transform:translate(-50%,50%);
     display:none;
     z-index: 6;
-    padding: 0px 8px;
+    padding: 2px 8px;
+    transform: translateX(-50%);
+    border-radius: 2px;
+    font-weight: 500;
+    font-size: 12px;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.misa-input-msg-error::after {
+    content: "";
+    position: absolute;
+    border: 5px solid transparent;
+    border-bottom-color: #FF7777;
+    bottom:100%;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .misa-field-error:hover ~ .misa-input-msg-error {
@@ -154,8 +168,8 @@ input {
     width:226px !important;
 }
 
-.misa-field816 {
-    width:816px !important;
+.misa-field810 {
+    width:810px !important;
 }
 
 a {
@@ -185,4 +199,9 @@ input[type=number]::-webkit-outer-spin-button {
     -moz-appearance: none;
     appearance: none;
     margin: 0; 
+}
+
+button {
+    outline: none;
+    border: none;
 }

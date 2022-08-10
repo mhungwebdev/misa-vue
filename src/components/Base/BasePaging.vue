@@ -19,6 +19,7 @@
                     class="misa-grid-paging-number"
                     :id="isCurrentPage(pageNumber) ? 'misa-grid-paging-current-page' : ''"
                     @click="pageNumber && pageNumber != currentPage && changePageNumber(pageNumber)"
+                    :style="{padding:!pageNumber ? '0px' : ''}"
                 >
                     {{pageNumber ? pageNumber : "..."}}
                 </div>

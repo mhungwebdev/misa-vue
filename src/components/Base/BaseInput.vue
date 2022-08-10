@@ -36,7 +36,8 @@
             error:String,
             //Hàm xử lý blur
             handleBlur:Function,
-            type:String
+            //Kiểu input
+            type:String,
         },
         mounted(){
             if(this.autoFocus)
@@ -55,12 +56,11 @@
              */
             handleChangeValue(value){
                 this.changeValue(value,this.fieldName)
-            }
+            },
         }
     }
 </script>
 
 <style scoped>
 @import url(../../CSS/components/input.css);
-
 </style>

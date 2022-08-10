@@ -17,6 +17,7 @@
     box-sizing: border-box; 
     text-indent: 10px;
     min-width: 200px;
+    font-size: 12px;
 }
 
 .misa-icon-input{
@@ -26,4 +27,9 @@
     width: 16px;
 	height: 16px;
     cursor: pointer;
+}
+
+.misa-input-with-icon::placeholder {
+    font-style: italic;
+    font-size: 12px;
 }

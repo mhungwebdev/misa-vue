@@ -13,7 +13,6 @@
 
 <script>
 import { appStore } from '../../stores/AppStore';
-import BaseSlidebarItem from '../Base/BaseSlidebarItem.vue'
     export default {
     name: "TheSlidebar",
     data() {
@@ -48,7 +47,6 @@ import BaseSlidebarItem from '../Base/BaseSlidebarItem.vue'
             AppStore.showSlidebar()
         }
     },
-    components: { BaseSlidebarItem }
 }
 </script>
 

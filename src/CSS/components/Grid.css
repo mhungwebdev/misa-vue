@@ -34,7 +34,7 @@
     max-width: 100%;
     width: calc(100%);
     height: calc(100vh - 48px);
-    padding-top:69px;
+    padding-top:74px;
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
@@ -43,17 +43,32 @@
 
 .misa-grid-func{ 
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     background-color: #fff;
-    padding: 16px;
+    padding: 16px 16px 32px 16px;
     align-items: center;
     z-index: 3;
+}
+
+.misa-grid-fun-left{
+
+}
+
+.misa-grid-func-right{
+    display: flex;
+    align-items: center;
 }
 
 .misa-grid-reload {
     background-position:-1098px -88px;
     cursor: pointer;
-    margin-left:12px
+    margin-left:12px;
+    opacity: 0.5;
+    position: relative;
+}
+
+.misa-grid-reload:hover {
+    opacity: 1;
 }
 
 .misa-grid-table{
@@ -64,5 +79,89 @@
     background-color: #fff;
     border-left: 16px solid transparent;
     border-right: 16px solid transparent;
-    height:calc(100% - 66px - 56px)
+    height:calc(100% - 66px - 56px - 16px)
+}
+
+#misa-toast-wrapper {
+    position: fixed;
+    top: 50px;
+    z-index: 10;
+    right: 60px;
+}
+
+.misa-button-interact-multi {
+    border-radius: 30px;
+    border:2px solid #3b3c3f !important;
+    height: 36px !important;
+    padding: 0px  16px !important;
+    /* box-sizing: border-box; */
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    transition: all .3s linear;
+}
+
+.misa-button-interact-multi .misa-button-label {
+    line-height: 13px !important;
+    box-sizing: border-box;
+    margin-right: 8px;
+    font-size: 12px;
+}
+
+.misa-button-interact-multi-arrow {
+    background-position: -564px -365px;
+    width: 8px;
+    height: 5px;
+    margin-top: 2px;
+    opacity: .5;
+}
+
+.misa-grid-export-data {
+    background-position: -705px -255px;
+    margin-left: 12px;
+    cursor: pointer;
+    opacity: .5;
+    position: relative;
+}
+
+.misa-grid-export-data:hover {
+    opacity: 1;
+}
+
+.misa-func-interact-multi {
+    position: absolute;
+    top:calc(100% + 0.5px);
+    border:1px solid #bbb;
+    padding: 4px 8px;
+    z-index: 99;
+    background-color: #fff;
+    width: 100px;
+    text-align: left;
+    right: 0;
+    cursor: pointer;
+}
+
+.misa-func-interact-multi:hover {
+    background-color: #e8e9ec;
+}
+
+.misa-grid-tooltip {
+    position: absolute;
+    white-space: nowrap;
+    top:calc(100% + 0.5px);
+    background-color: rgb(66, 66, 66);
+    color:#fff;
+    display: none;
+    font-size: 11px;
+    padding: 2px 8px;
+    transform: translateX(-50%);
+    border-radius: 2px;
+}
+
+.misa-grid-reload:hover .misa-grid-tooltip {
+    display: block;
+}
+
+.misa-grid-export-data:hover .misa-grid-tooltip {
+    display: block;
 }

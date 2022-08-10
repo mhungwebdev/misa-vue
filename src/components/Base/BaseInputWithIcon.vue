@@ -4,7 +4,7 @@
             @focus="changeState" 
             @blur="changeState"
             v-model="value"
-            @keyup="e => onHandleKeyup(e)"
+            @input="e => onHandleInput(e.target.value)"
             type="text" 
             placeholder="Tìm theo mã, tên nhân viên" 
             class="misa-input-with-icon" 
@@ -24,9 +24,15 @@
                 value:""
             }
         },
+        watch:{
+            valueProp(newValue,oldValue){
+                this.value = newValue
+            }
+        },
         props:{
-            //hàm key up
-            keyupMethod:Function
+            //hàm input
+            onHandleInput:Function,
+            valueProp:String
         },
         methods:{
             /**
@@ -35,15 +41,6 @@
              */
             changeState(){
                 this.isFocus = !this.isFocus;
-            },
-
-            /**
-             * Func : lắng nghe sự kiện keyup
-             * Author : Lê Mạnh Hùng (15/7/2022)
-             * @param {*} e tham số mặc định
-             */
-            onHandleKeyup(e){
-                this.keyupMethod(e,this.value)
             }
         }   
     }

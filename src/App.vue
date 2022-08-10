@@ -1,5 +1,13 @@
 <template>
   <div :class="{'misa-container':true ,'misa-slidebar-hired':!AppStore.getStateSlidebar}">
+    <BaseToast 
+      :style="{top:'10px',animationDuration:`0.5s`}" 
+      :type="'success'" 
+      :message="AppStore.toastMessage"
+      v-if="AppStore.toastMessage"
+    >
+      <div class="misa-icon misa-icon-success"></div>
+    </BaseToast>
     <TheSlidebar />
     <TheContent />
     <TheLoading v-if="AppStore.isLoading" />

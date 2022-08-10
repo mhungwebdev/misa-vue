@@ -1,5 +1,12 @@
 <template>
     <div class="misa-grid-wrapper">
+        <div class="misa-toast-error-list">
+            <BaseToast v-for="(message, index) in EmployeeFormStore.listErrorServer" :key="{ index }"
+                :style="{ top: `${index * 80 + 10}` + 'px', animationDuration: `${index * 0.2 + 0.3}s` }"
+                :type="'error'" :message="message">
+                <div class="misa-icon misa-icon-error"></div>
+            </BaseToast>
+        </div>
         <div class="misa-grid-header">
             <div class="misa-grid-title">Nhân viên</div>
 
@@ -8,236 +15,227 @@
 
         <div class="misa-grid">
             <div class="misa-grid-func">
-                <BaseInputWithIcon 
-                    :keyupMethod="searchEmployee" 
-                    :value="EmployeeStore.employeesFilter" 
-                    :changeMethod="EmployeeStore.changeEmployeeFilter" 
-                />
+                <div class="misa-grid-fun-left">
+                    <BaseButton
+                        @click="() => EmployeeStore.idSelected.length > 0 ? EmployeeStore.isShowInteractMulti = !EmployeeStore.isShowInteractMulti : null"
+                        class="misa-button-interact-multi" :textButton="'Thực hiện hàng loạt'">
+                        <div :style="{ opacity: EmployeeStore.idSelected.length > 0 ? '1' : '' }"
+                            class="misa-button-interact-multi-arrow misa-icon"></div>
+                    </BaseButton>
+                    <div v-if="EmployeeStore.idSelected.length > 0 && EmployeeStore.isShowInteractMulti"
+                        class="misa-func-interact-multi" @click="handleDeleteMulti">
+                        Xóa
+                    </div>
+                </div>
 
-                <div @click="handleReload" class="misa-grid-reload misa-icon misa-icon24"></div>
+                <div class="misa-grid-func-right">
+                    <BaseInputWithIcon :valueProp="EmployeeStore.employeesFilter"
+                        :onHandleInput="EmployeeStore.search" />
+
+                    <div @click="handleReload" class="misa-grid-reload misa-icon misa-icon24">
+                        <div class="misa-grid-tooltip">Lấy lại dữ liệu</div>
+                    </div>
+
+                    <div class="misa-grid-export-data misa-icon misa-icon24">
+                        <div class="misa-grid-tooltip">Xuất ra Excel</div>
+                    </div>
+                </div>
             </div>
-            <BaseTable 
-                :showFormEdit="handleShowFormEdit" 
-                :data="EmployeeStore.getData" 
-                :fieldRender="fieldRenderEmployee" 
-                :idRow="'EmployeeId'" 
-                @delete-row="handleShowConfirmDelete"
-                :listItemSelected="EmployeeStore.idSelected"
-                :handleSelectItem="EmployeeStore.selectItem"
-                :handleToggleAll="EmployeeStore.toggleSelectAll"
-            />
-            <BasePaging 
-                :pageNumberRender="EmployeeStore.pageNumberRender" 
-                :currentPage="EmployeeStore.pageNumber" 
-                :totalRecord="EmployeeStore.totalRecord"
-                :changePageNumber="changePageNumber"
-                :pageSize="EmployeeStore.pageSize"
-                :changePageSize="changePageSize"
-                :totalPage="EmployeeStore.totalPage"
-            />
+            <BaseTable :showFormEdit="handleShowFormEdit" :data="EmployeeStore.getData"
+                :fieldRender="fieldRenderEmployee" :idRow="'employeeId'" @delete-row="handleShowConfirmDelete"
+                :listItemSelected="EmployeeStore.idSelected" :handleSelectItem="EmployeeStore.selectItem"
+                :handleToggleAll="EmployeeStore.toggleSelectAll" />
+
+            <BasePaging :pageNumberRender="EmployeeStore.pageNumberRender" :currentPage="EmployeeStore.pageNumber"
+                :totalRecord="EmployeeStore.totalRecord" :changePageNumber="changePageNumber"
+                :pageSize="EmployeeStore.pageSize" :changePageSize="changePageSize"
+                :totalPage="EmployeeStore.totalPage" />
         </div>
 
         <EmployeeForm v-if="EmployeeFormStore.isShowForm" />
-        <BasePopup 
-            :methodAccept="hidePopup" 
-            v-if="EmployeeFormStore.errorForm" 
-            :message="EmployeeFormStore.errorForm" 
-        />
+        <BasePopup :methodAccept="hidePopup" v-if="EmployeeFormStore.errorForm" :message="EmployeeFormStore.errorForm"
+            :type="'error-popup'" :textAccept="'Đóng'">
+            <div class="misa-popup-icon misa-icon misa-popup-icon-error-form"></div>
+        </BasePopup>
 
-        <BasePopup 
-            :methodCancel="handleCancelDelete" 
-            :methodAccept="handleDeleteEmployee" 
-            :message="messageConfirm" 
-            :type="'confirm-delete'" 
-            v-if="isShowConfirm"
-        />
+        <BasePopup :methodCancel="handleCancelDelete" :methodAccept="handleDeleteEmployee" :message="messageConfirm"
+            :textAccept="'Có'" :type="'confirm-delete'" v-if="isShowConfirm">
+            <div :class="{ 'misa-popup-icon': true, 'misa-icon': true }"></div>
+        </BasePopup>
     </div>
 </template>
 
 <script>
-import BaseInputWithIcon from "../components/Base/BaseInputWithIcon.vue"
-import BaseTable from "../components/Base/BaseTable.vue"
-import BasePaging from "../components/Base/BasePaging.vue"
-import BaseButton from "../components/Base/BaseButton.vue"
-import { employeeStore } from "../stores/Pages/EmployeeStore"
-import { fieldRenderEmployee } from "../assets/Resource/static/fieldRender"
-import { appStore } from "../stores/AppStore"
 import { ref } from "vue"
+import { fieldRenderEmployee } from "../assets/Resource/static/fieldRender"
+import { FormMode, ToastMode,DeleteMode } from "../Enum/Enum"
 import EmployeeForm from "../forms/EmployeeForm.vue"
-import { employeeFormStore, FormMode } from "../stores/forms/EmployeeForm"
-import BasePopup from "../components/Base/BasePopup.vue"
+import { appStore } from "../stores/AppStore"
+import { employeeFormStore } from "../stores/forms/EmployeeForm"
+import { employeeStore } from "../stores/Pages/EmployeeStore"
+import {Resource} from "../Resource/Resource"
 
-    export default {
-        data(){
-            const searchRef = ref(null)
+export default {
+    components: { EmployeeForm },
+    data() {
+        const searchRef = ref(null)
 
-            return {
-                //ref dùng làm debounce tìm kiếm
-                searchRef,
-                //nhân viên đang được focus
-                itemFocus:null,
-                //message confirm xóa
-                messageConfirm:"",
-                //biến xác định ẩn hiện của popup confirm xóa
-                isShowConfirm:false,
-            }
+        return {
+            //ref dùng làm debounce tìm kiếm
+            searchRef,
+            //nhân viên đang được focus
+            itemFocus: null,
+            //message confirm xóa
+            messageConfirm: "",
+            //biến xác định ẩn hiện của popup confirm xóa
+            isShowConfirm: false,
+            //mảng thông báo toast
+            listMessageToast: []
+        }
+    },
+    setup() {
+        const EmployeeStore = employeeStore()
+        const EmployeeFormStore = employeeFormStore()
+        const AppStore = appStore()
+
+        return {
+            EmployeeStore,
+            fieldRenderEmployee,
+            AppStore,
+            EmployeeFormStore,
+            DeleteMode,
+        }
+    },
+
+    async created() {
+        this.AppStore.isLoading = true
+        await this.EmployeeStore.loadData()
+        this.AppStore.isLoading = false
+    },
+    methods: {
+        /**
+         * Func : chuyển trang
+         * Author : Lê Mạnh Hùng (15/7/2022)
+         * @param {*} pageNumber được chọn 
+         */
+        async changePageNumber(pageNumber) {
+            this.AppStore.setStateLoading(true)
+            await this.EmployeeStore.changePageNumber(pageNumber)
+            this.AppStore.setStateLoading(false)
         },
-        components:{ BaseInputWithIcon, BaseTable, BasePaging, BaseButton, EmployeeForm, BasePopup },
-        setup(){
-            const EmployeeStore = employeeStore()
-            const EmployeeFormStore = employeeFormStore()
-            const AppStore = appStore()
-            
-            return {
-                EmployeeStore,
-                fieldRenderEmployee,
-                AppStore,
-                EmployeeFormStore
-            }
+
+        /**
+         * Func : thay đổi size của trang
+         * Author : Lê Mạnh Hùng (15/7/2022)
+         * @param {*} pageSize được chọn
+         */
+        async changePageSize(pageSize) {
+            this.AppStore.setStateLoading(true)
+            await this.EmployeeStore.changePageSize(pageSize)
+            this.AppStore.setStateLoading(false)
         },
-        async created(){
+
+        /**
+         * Func : show form
+         * Author : Lê Mạnh Hùng (15/7/2022)
+         * @param {*} state trạng thái của form (true-hiện, false-ẩn)
+         */
+        async setStateForm(state) {
+            this.EmployeeFormStore.formMode = FormMode.FORM_ADD
+            await this.EmployeeFormStore.initForm()
+            this.EmployeeFormStore.isShowForm = state
+        },
+
+        /**
+         * Func : ẩn pop up báo lỗi của form
+         * Author : Lê Mạnh Hùng (18/7/2022)
+         */
+        hidePopup() {
+            this.EmployeeFormStore.errorForm = ""
+        },
+
+        /**
+         * Func : Xử lý show form với mode sửa
+         * Author : Lê Mạnh Hùng (18/7/2022)
+         * @param {*} id của đối tượng edit
+         */
+        async handleShowFormEdit(id) {
+            this.EmployeeFormStore.formMode = FormMode.FORM_EDIT
+            this.EmployeeFormStore.idEmployeeEdit = id
+            await this.EmployeeFormStore.initForm()
+            this.EmployeeFormStore.isShowForm = true
+        },
+
+        /**
+         * Func : xử lý chức năng reload
+         * Author : Lê Mạnh Hùng (18/7/2022)
+         */
+        async handleReload() {
             this.AppStore.isLoading = true
+            this.EmployeeStore.employeesFilter = ""
             await this.EmployeeStore.loadData()
             this.AppStore.isLoading = false
         },
-        methods:{
-            /**
-             * Func : chuyển trang
-             * Author : Lê Mạnh Hùng (15/7/2022)
-             * @param {*} pageNumber được chọn 
-             */
-            async changePageNumber(pageNumber){
-                this.AppStore.setStateLoading(true)
-                await this.EmployeeStore.changePageNumber(pageNumber)
-                this.AppStore.setStateLoading(false)
-            },
 
-            /**
-             * Func : thay đổi size của trang
-             * Author : Lê Mạnh Hùng (15/7/2022)
-             * @param {*} pageSize được chọn
-             */
-            async changePageSize(pageSize){
-                this.AppStore.setStateLoading(true)
-                await this.EmployeeStore.changePageSize(pageSize)
-                this.AppStore.setStateLoading(false)
-            },
+        /**
+         * Func : Xử lý show popup confirm xóa nhân viên
+         * Author : Lê Mạnh Hùng (18/7/2022)
+         * @param {*} employee đối tượng nhân viên muốn xóa
+         */
+        handleShowConfirmDelete(employee) {
+            if (this.EmployeeStore.deleteMode == DeleteMode.ONE) {
+                this.itemFocus = employee
+                this.messageConfirm = Resource.messageDeleteOneEmployee(employee["employeeCode"])
+            } else {
+                this.messageConfirm = Resource.confirmDeleteMultiEmployeeMessage
+            }
+            this.isShowConfirm = true
+        },
 
-            /**
-             * Func : Tìm kiếm với từ khóa
-             * Author : Lê Mạnh Hùng (15/7/2022)
-             * @param {*} e tham số mặc định
-             * @param {*} keyword từ khóa tìm kiếm
-             */
-            async searchEmployee(e,keyword){
-                if(e.key == "Enter" && this.EmployeeStore.employeesFilter != keyword){
-                    this.reLoad(keyword)
-                }
+        /**
+         * Func : Xử lý sự kiện hủy xóa
+         * Author : Lê Mạnh Hùng (18/7/2022)
+         */
+        handleCancelDelete() {
+            this.isShowConfirm = false
+        },
 
-                if(keyword == ""){
-                    this.searchRef = setTimeout(() => {
-                        this.EmployeeStore.employeesFilter = ""
-                        this.reLoad(keyword)
-                    },1500)
-                }
+        handleDeleteMulti() {
+            this.EmployeeStore.deleteMode = DeleteMode.MULTI
+            this.handleShowConfirmDelete()
+        },
 
-                if(keyword != "" && this.searchRef){
-                    clearTimeout(this.searchRef)
-                }
-            },
+        /**
+         * Func : Xử lý sự kiện xóa nhân viên
+         * Author : Lê Mạnh Hùng (18/7/2022)
+         */
+        async handleDeleteEmployee() {
+            let res = null
+            if (this.EmployeeStore.deleteMode == DeleteMode.ONE) {
+                res = await this.EmployeeStore.deleteEmployee(this.itemFocus["employeeId"])
+            } else {
+                res = await this.EmployeeStore.deleteMultiEmployee()
+            }
 
-            /**
-             * Func : Tìm kiếm với từ khóa (tạo loading)
-             * Author : Lê Mạnh Hùng (15/7/2022)
-             * @param {*} keyword từ khóa tìm kiếm
-             */
-            async reLoad(keyword){
-                this.AppStore.setStateLoading(true)
-                await this.EmployeeStore.search(keyword)
-                this.AppStore.setStateLoading(false)
-            },
-
-            /**
-             * Func : show form
-             * Author : Lê Mạnh Hùng (15/7/2022)
-             * @param {*} state trạng thái của form (true-hiện, false-ẩn)
-             */
-            async setStateForm(state){
-                this.EmployeeFormStore.formMode = FormMode.FORM_ADD
-                await this.EmployeeFormStore.initForm()
-                this.EmployeeFormStore.isShowForm = state
-            },
-
-            /**
-             * Func : ẩn pop up báo lỗi của form
-             * Author : Lê Mạnh Hùng (18/7/2022)
-             */
-            hidePopup(){
-                this.EmployeeFormStore.errorForm = ""
-            },
-
-            /**
-             * Func : Xử lý show form với mode sửa
-             * Author : Lê Mạnh Hùng (18/7/2022)
-             * @param {*} id của đối tượng edit
-             */
-            handleShowFormEdit(id){
-                this.EmployeeFormStore.formMode = FormMode.FORM_EDIT
-                this.EmployeeFormStore.idEmployeeEdit = id
-                this.EmployeeFormStore.initForm()
-                this.EmployeeFormStore.isShowForm = true
-            },
-
-            /**
-             * Func : xử lý chức năng reload
-             * Author : Lê Mạnh Hùng (18/7/2022)
-             */
-            async handleReload(){
+            if (res) {
+                this.AppStore.typeToast = ToastMode.SUCCESS
+                this.AppStore.toastMessage = Resource.messageDeleteSuccessEmployee(res)
+                setTimeout(() => this.AppStore.toastMessage = "", 3000)
                 this.AppStore.isLoading = true
                 await this.EmployeeStore.loadData()
                 this.AppStore.isLoading = false
-            },
-
-            /**
-             * Func : Xử lý show popup confirm xóa nhân viên
-             * Author : Lê Mạnh Hùng (18/7/2022)
-             * @param {*} employee đối tượng nhân viên muốn xóa
-             */
-            handleShowConfirmDelete(employee){
-                this.itemFocus = employee
-                this.messageConfirm = `Bạn có thực sự muốn xóa Nhân viên <${employee["EmployeeCode"]}> không ?`
-                this.isShowConfirm = true
-            },
-
-            /**
-             * Func : Xử lý sự kiện hủy xóa
-             * Author : Lê Mạnh Hùng (18/7/2022)
-             */
-            handleCancelDelete(){
-                this.isShowConfirm = false
-            },
-
-            /**
-             * Func : Xử lý sự kiện xóa nhân viên
-             * Author : Lê Mạnh Hùng (18/7/2022)
-             */
-            async handleDeleteEmployee(){
-                await this.EmployeeStore.deleteEmployee(this.itemFocus["EmployeeId"])
-                        .then(async res => {
-                            console.log(res)
-                            if(res){
-                                this.isShowConfirm = false
-                                this.AppStore.isLoading = true
-                                await this.EmployeeStore.loadData()
-                                this.AppStore.isLoading = false
-                            }
-                        })
-                        .catch(err => {
-                            console.log(err);
-                        })
             }
+
+            if (!res) {
+                this.AppStore.typeToast = ToastMode.ERROR
+                this.AppStore.toastMessage = Resource.errorMessage
+                setTimeout(() => this.AppStore.toastMessage = "", 3000)
+            }
+
+            this.isShowConfirm = false
         }
     }
+}
 </script>
 
 <style>

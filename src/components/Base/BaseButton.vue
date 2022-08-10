@@ -1,6 +1,7 @@
 <template>
-    <div :tabIndex="tabIndex" @click="method" :class="['misa-button',classButton]">
-        <div>{{textButton}}</div>
+    <div :style="{color:buttonColor ? buttonColor : ''}" :tabIndex="tabIndex" @click="method" :class="['misa-button',classButton]">
+        <div class="misa-button-label">{{textButton}}</div>
+        <slot></slot>
         <div v-if="tooltip != undefined" class="misa-btn-tooltip">{{tooltip}}</div>
     </div>
 </template>
@@ -12,11 +13,15 @@
             //kiểu button
             typeButton:String,
             //text trên button
-            textButton:String,
+            textButton:{
+                type:String,
+                default:'Label',
+            },
             //Hàm chức năng
             method:Function,
             tabIndex:Number,
             tooltip:String,
+            buttonColor:String,
         },
         computed:{
             /**

@@ -2,14 +2,19 @@
     <div class="misa-popup-wrapper">
         <div>
             <div class="misa-popup-content">
-                <div :class="{'misa-popup-icon':true,'misa-icon':true, 'misa-popup-icon-confirm-form':type == 'confirm-form'}"></div>
+                <slot></slot>
                 <div class="misa-popup-text">{{message}}</div>
+                <div class="misa-list-error">
+                    <div v-if="listError" v-for="(error,index) in listError" :key="index">{{error}}</div>
+                </div>
             </div>
+
             <div :class="{
                 'misa-popup-button':true,
                 'misa-popup-confirm-button':type == 'confirm-delete',
                 'misa-popup-confirm-form-button':type == 'confirm-form'
                 }"
+                :style="{justifyContent: type == 'error-popup' ? 'center !important' : ''}"
             >
                 <BaseButton v-if="type == 'confirm-delete' || type == 'confirm-form'" @click="methodCancel" :typeButton="'outline'" :textButton="'Hủy'" />
 
@@ -37,20 +42,16 @@ import BaseButton from './BaseButton.vue';
         methodAccept:Function,
         //Hàm từ chối
         methodReject:Function,
-    },
-    computed:{
-        textAccept(){
-            if(this.type){
-                return 'Có'
-            }
-
-            return 'Đồng ý'
+        //list error của form
+        listError:Array,
+        textAccept:{
+            type:String,
+            required:true
         }
-    }
+    },
 }
 </script>
 
-<style scoped>
+<style>
 @import url(../../CSS/components/popup.css);
-
 </style>

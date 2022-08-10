@@ -1,7 +1,7 @@
 <template>
     <div class="misa-content-header">
         <div class="misa-content-header-left">
-            <div @click="hireSlidebar" class="misa-content-header-icon-toggle misa-icon misa-icon24"></div>
+            <div @click="hideSlidebar" class="misa-content-header-icon-toggle misa-icon misa-icon24"></div>
             <div class="misa-content-header-company-name">CÔNG TY SẢN XUẤT - THƯƠNG MẠI - DỊCH VỤ QUI PHÚC</div>
             <div class="misa-content-header-left-arrow misa-icon misa-icon24"></div>
         </div>
@@ -24,10 +24,10 @@ import { appStore } from '../../stores/AppStore'
             /**
              * Func : xử lý sự kiện ẩn slidebar
              */
-            hireSlidebar(){
+            hideSlidebar(){
                 const AppStore = appStore()
 
-                AppStore.hireSlidebar()
+                AppStore.hideSlidebar()
             }
         }
     }

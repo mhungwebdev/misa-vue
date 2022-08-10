@@ -13,64 +13,64 @@
 export const fieldRenderEmployee = [
     {
         textPositionClass:'misa-text-left',
-        fieldName: 'EmployeeCode',
+        fieldName: 'employeeCode',
         fieldDisplay:'MÃ NHÂN VIÊN'
     },
     {
         textPositionClass:'misa-text-left',
-        fieldName: 'FullName',
+        fieldName: 'fullName',
         fieldDisplay:'TÊN NHÂN VIÊN'
     },
     {
         textPositionClass:'misa-text-left',
-        fieldName: 'GenderName',
+        fieldName: 'genderName',
         fieldDisplay:'GIỚI TÍNH'
     },
     {
         textPositionClass:'misa-text-center',
-        fieldName: 'DateOfBirth',
+        fieldName: 'dateOfBirth',
         fieldDisplay:'NGÀY SINH',
         type:"date"
     },
     {
         textPositionClass:'misa-text-left',
-        fieldName: 'IdentityNumber',
+        fieldName: 'identityNumber',
         fieldDisplay:'SỐ CMND'
     },
     {
         textPositionClass:'misa-text-left',
-        fieldName: 'PositionName',
+        fieldName: 'positionName',
         fieldDisplay:'CHỨC DANH'
     },
     {
         textPositionClass:'misa-text-left',
-        fieldName: 'DepartmentName',
+        fieldName: 'departmentName',
         fieldDisplay:'TÊN ĐƠN VỊ'
     },
     {
         textPositionClass:'misa-text-left',
-        fieldName: '',
+        fieldName: 'bankAccount',
         fieldDisplay:'SỐ TÀI KHOẢN'
     },
     {
         textPositionClass:'misa-text-left',
-        fieldName: '',
+        fieldName: 'bankName',
         fieldDisplay:'TÊN NGÂN HÀNG'
     },
     {
         textPositionClass:'misa-text-left',
-        fieldName: '',
+        fieldName: 'bankBranch',
         fieldDisplay:'CHI NHÁNH TÀI KHOẢN NGÂN HÀNG'
     },
 ]
 
 export const fieldDepartmentRenderDropdown = [
     {
-        FieldName: 'DepartmentCode',
+        FieldName: 'departmentCode',
         TextPosition: 'misa-text-left',
         FieldDisplay: 'Mã đơn vị'
     },{
-        FieldName: 'DepartmentName',
+        FieldName: 'departmentName',
         TextPosition:'misa-text-left',
         FieldDisplay: 'Tên đơn vị'
     }

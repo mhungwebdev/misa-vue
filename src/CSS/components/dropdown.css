@@ -41,8 +41,8 @@
     justify-content:center;
     cursor: pointer;
     position: absolute;
-    right: -0.5px;
-    top: -0.25px;
+    right:0;
+    top: 0.25px;
 }
 
 .misa-dropdown-icon span{

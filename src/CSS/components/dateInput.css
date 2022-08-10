@@ -9,9 +9,13 @@
     outline: none;
     box-sizing: border-box;
     border:1px solid #babec5;
-    border-radius: var(--border-radius-input);
+    border-radius: 2px;
     cursor: pointer;
     width: 100%;
+}
+
+.misa-date-input::-webkit-input-placeholder {
+    font-style: italic;
 }
 
 .misa-date-input:focus{

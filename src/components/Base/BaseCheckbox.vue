@@ -1,5 +1,6 @@
 <template>
-    <div @click="toggleSelect" :class="{'misa-checkbox':true,'misa-checkbox-checked':checkedData}">
+    <div @click="toggleSelect" 
+        :class="{'misa-checkbox':true,'misa-checkbox-checked':checkedData}">
         <div></div>
     </div>
 </template>
