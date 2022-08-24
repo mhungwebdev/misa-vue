@@ -43,6 +43,10 @@
     background-position: -88px -144px;
 }
 
+.misa-dialog-icon-question:hover .misa-icon-tooltip{
+    display: block;
+}
+
 .misa-dialog-icon-close{
     background-position: -144px -144px;
     cursor: pointer;

@@ -1,13 +1,14 @@
 <template>
     <div class="misa-date-input-wrapper">
         <div class="misa-label-field">{{ label }}</div>
-        <input :tabindex="tabIndex" :class="{ 'misa-date-input': true, 'misa-field-error': error }"
-            :placeholder="placeholder" :value="value" @input="handleInput" @blur="handleBlur(value, fieldName)" />
+        <input @focus="isShowDatePicker = true" :tabindex="tabIndex"
+            :class="{ 'misa-date-input': true, 'misa-field-error': error }" :placeholder="placeholder" :value="value"
+            @input="handleInput" @blur="blurMethod" @keydown="handleKeydown" />
         <div @click="handleToggleDatePicker" class="misa-date-input-icon misa-icon misa-icon24"></div>
         <span v-if="isShowDatePicker">
-            <v-date-picker model="date" :key="'today'" v-model="date" @click="handleChangeValue"
-                class="misa-date-picker" :current-value="Date.now()" locale="vi"
-                :dayNamesShorter="['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN']" :highlight="'green'" />
+            <v-date-picker model="date" :key="'today'" v-model="date" class="misa-date-picker" locale="vi"
+                @dayclick="handleChangeValue" :dayNamesShorter="['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN']"
+                color="green" />
         </span>
         <div v-if="error" class="misa-input-msg-error">{{ error }}</div>
     </div>
@@ -35,7 +36,7 @@ export default {
     },
     async created() {
         if (this.value)
-            this.date = this.value
+            this.date = CommonJS.createDateDDMMYYYY(this.value)
     },
     props: {
         //label cho field
@@ -56,8 +57,11 @@ export default {
         value(newValue, oldValue) {
             if (this.CommonJS.checkDate(newValue)) {
                 this.date = this.CommonJS.createDateDDMMYYYY(newValue)
-            } else
-                this.date = new Date()
+            }
+        },
+        date(newValue) {
+            this.changeValue(this.CommonJS.formatDate(newValue), this.fieldName)
+            this.handleBlur(this.CommonJS.formatDate(newValue), this.fieldName)
         }
     },
     methods: {
@@ -69,14 +73,21 @@ export default {
             this.isShowDatePicker = !this.isShowDatePicker;
         },
 
+        blurMethod(e) {
+            this.handleBlur(this.value, this.fieldName)
+            if (e.relatedTarget?.className != "vc-day-content vc-focusable")
+                this.isShowDatePicker = false
+
+        },
+
         /**
          * Func : chọn ngày
          * Author : Lê Mạnh Hùng (29/7/2022)
          */
         handleChangeValue(e) {
-            this.isShowDatePicker = false
-            this.changeValue(this.CommonJS.formatDate(this.date), this.fieldName)
-            this.handleBlur(this.CommonJS.formatDate(this.date), this.fieldName)
+            if(e.id){
+                this.isShowDatePicker = false
+            }
         },
 
         /**
@@ -85,6 +96,43 @@ export default {
          */
         handleInput(e) {
             this.changeValue(e.target.value, this.fieldName)
+        },
+
+        /**
+         * Func : Lắng nghe sự kiện keydown
+         * Author : Lê Mạnh Hùng (22/8/2022)
+         * @param {*} e 
+         */
+        handleKeydown(e) {
+            if (e.key == "Escape" || e.key == "Enter") this.isShowDatePicker = false
+
+            if (e.key == "ArrowDown") {
+                if (!this.isShowDatePicker) {
+                    this.isShowDatePicker = true
+                } else {
+                    this.date = CommonJS.calcDate(this.date, 7, 1)
+                }
+            }
+
+            if (e.key == "ArrowUp") {
+                if (!this.isShowDatePicker) {
+                    this.isShowDatePicker = true
+                } else {
+                    this.date = CommonJS.calcDate(this.date, 7, 0)
+                }
+            }
+
+            if (e.key == "ArrowLeft") {
+                if (this.isShowDatePicker) {
+                    this.date = CommonJS.calcDate(this.date, 1, 0)
+                }
+            }
+
+            if (e.key == "ArrowRight") {
+                if (this.isShowDatePicker) {
+                    this.date = CommonJS.calcDate(this.date, 1, 1)
+                }
+            }
         }
     }
 }

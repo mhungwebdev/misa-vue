@@ -11,6 +11,7 @@
             @blur="handleBlur(value,fieldName)"
             min="0"
         />
+        <div v-if="tooltip" class="misa-input-tooltip">{{tooltip}}</div>
         <div v-if="error" class="misa-input-msg-error">{{error}}</div>
     </div>
 </template>
@@ -38,6 +39,8 @@
             handleBlur:Function,
             //Kiểu input
             type:String,
+            //tooltip
+            tooltip:String
         },
         mounted(){
             if(this.autoFocus)

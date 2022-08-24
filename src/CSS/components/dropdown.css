@@ -41,6 +41,17 @@
     justify-content:center;
     cursor: pointer;
     position: absolute;
+    right:-0.5px;
+}
+
+.misa-dropdown-arrow-icon {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    cursor: pointer;
+    position: absolute;
     right:0;
     top: 0.25px;
 }
@@ -51,7 +62,17 @@
 	height: 5px !important;
 }
 
+.misa-dropdown-arrow-icon span{
+    background-position: -564px -365px;
+    width: 8px !important;
+	height: 5px !important;
+}
+
 .misa-dropdown-icon:hover{
+    background-color: #d2d3d6;
+}
+
+.misa-dropdown-arrow-icon:hover{
     background-color: #d2d3d6;
 }
 

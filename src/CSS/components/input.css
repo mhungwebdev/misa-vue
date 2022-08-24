@@ -19,3 +19,20 @@
 .misa-input:focus {
     border-color: var(--border-color-focus);
 }
+
+.misa-input-tooltip {
+    position: absolute;
+    background-color: rgb(70, 70, 70);
+    color: #fff;
+    padding: 2px 4px;
+    z-index: 4;
+    border-radius: 2px;
+    top: 50%;
+    left: 20px;
+    white-space: nowrap;
+    display: none;
+}
+
+.misa-label-field:hover ~ .misa-input-tooltip {
+    display: block;
+}

@@ -1,66 +1,64 @@
-{/* <th class="misa-text-left">MÃ NHÂN VIÊN</th>
-<th class="misa-text-left">TÊN NHÂN VIÊN</th>
-<th class="misa-text-left">GIỚI TÍNH</th>
-<th class="misa-text-center">NGÀY SINH</th>
-<th class="misa-text-left">SỐ CMND</th>
-<th class="misa-text-left">CHỨC DANH</th>
-<th class="misa-text-left">TÊN ĐƠN VỊ</th>
-<th class="misa-text-left">SỐ TÀI KHOẢN</th>
-<th class="misa-text-left">TÊN NGÂN HÀNG</th>
-<th class="misa-text-left">CHI NHÁNH TK NGÂN HÀNG</th>
-<th class="misa-text-center">Chức năng</th> */}
-
 export const fieldRenderEmployee = [
     {
         textPositionClass:'misa-text-left',
         fieldName: 'employeeCode',
-        fieldDisplay:'MÃ NHÂN VIÊN'
+        fieldDisplay:'MÃ NHÂN VIÊN',
+        width:'120px'
     },
     {
         textPositionClass:'misa-text-left',
         fieldName: 'fullName',
-        fieldDisplay:'TÊN NHÂN VIÊN'
+        fieldDisplay:'TÊN NHÂN VIÊN',
+        width:'196px'
     },
     {
         textPositionClass:'misa-text-left',
         fieldName: 'genderName',
-        fieldDisplay:'GIỚI TÍNH'
+        fieldDisplay:'GIỚI TÍNH',
+        width:'100px'
     },
     {
         textPositionClass:'misa-text-center',
         fieldName: 'dateOfBirth',
         fieldDisplay:'NGÀY SINH',
-        type:"date"
+        type:"date",
+        width:'114px'
     },
     {
         textPositionClass:'misa-text-left',
         fieldName: 'identityNumber',
-        fieldDisplay:'SỐ CMND'
+        fieldDisplay:'SỐ CMND',
+        width:'137px'
     },
     {
         textPositionClass:'misa-text-left',
         fieldName: 'positionName',
-        fieldDisplay:'CHỨC DANH'
+        fieldDisplay:'CHỨC DANH',
+        width:'143px'
     },
     {
         textPositionClass:'misa-text-left',
         fieldName: 'departmentName',
-        fieldDisplay:'TÊN ĐƠN VỊ'
+        fieldDisplay:'TÊN ĐƠN VỊ',
+        width:'244px'
     },
     {
         textPositionClass:'misa-text-left',
         fieldName: 'bankAccount',
-        fieldDisplay:'SỐ TÀI KHOẢN'
+        fieldDisplay:'SỐ TÀI KHOẢN',
+        width:'160px'
     },
     {
         textPositionClass:'misa-text-left',
         fieldName: 'bankName',
-        fieldDisplay:'TÊN NGÂN HÀNG'
+        fieldDisplay:'TÊN NGÂN HÀNG',
+        width:'189px'
     },
     {
         textPositionClass:'misa-text-left',
         fieldName: 'bankBranch',
-        fieldDisplay:'CHI NHÁNH TÀI KHOẢN NGÂN HÀNG'
+        fieldDisplay:'CHI NHÁNH TÀI KHOẢN NGÂN HÀNG',
+        width:'250px'
     },
 ]
 

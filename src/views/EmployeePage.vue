@@ -7,22 +7,33 @@
                 <div class="misa-icon misa-icon-error"></div>
             </BaseToast>
         </div>
+
+        <BaseToast
+            v-if="EmployeeStore.toastMessage"
+            :type="EmployeeStore.typeToast"
+            :message="EmployeeStore.toastMessage"
+            :style="{animationDuration:'.3s'}"
+        >
+            <div class="misa-icon misa-icon-error"></div>
+        </BaseToast>
+
         <div class="misa-grid-header">
             <div class="misa-grid-title">Nhân viên</div>
 
-            <BaseButton :method="() => setStateForm(true)" :textButton="'Thêm mới nhân viên'" :typeButton="'contain'" />
+            <BaseButton :style="{ height: '36px', lineHeight: '36px' }" :method="() => setStateForm(true)"
+                :textButton="'Thêm mới nhân viên'" :typeButton="'contain'" />
         </div>
 
         <div class="misa-grid">
             <div class="misa-grid-func">
                 <div class="misa-grid-fun-left">
                     <BaseButton
-                        @click="() => EmployeeStore.idSelected.length > 0 ? EmployeeStore.isShowInteractMulti = !EmployeeStore.isShowInteractMulti : null"
+                        @click="(e) => EmployeeStore.idSelected.length > 1 ? EmployeeStore.isShowInteractMulti = !EmployeeStore.isShowInteractMulti : null"
                         class="misa-button-interact-multi" :textButton="'Thực hiện hàng loạt'">
-                        <div :style="{ opacity: EmployeeStore.idSelected.length > 0 ? '1' : '' }"
+                        <div :style="{ opacity: EmployeeStore.idSelected.length > 1 ? '1' : '' }"
                             class="misa-button-interact-multi-arrow misa-icon"></div>
                     </BaseButton>
-                    <div v-if="EmployeeStore.idSelected.length > 0 && EmployeeStore.isShowInteractMulti"
+                    <div v-if="EmployeeStore.idSelected.length > 1 && EmployeeStore.isShowInteractMulti"
                         class="misa-func-interact-multi" @click="handleDeleteMulti">
                         Xóa
                     </div>
@@ -36,15 +47,16 @@
                         <div class="misa-grid-tooltip">Lấy lại dữ liệu</div>
                     </div>
 
-                    <div class="misa-grid-export-data misa-icon misa-icon24">
+                    <label @click="EmployeeStore.exportData" class="misa-grid-export-data misa-icon misa-icon24">
+                        <input :style="{ display: 'none' }" id="open-project" type="file" webkitdirectory directory />
                         <div class="misa-grid-tooltip">Xuất ra Excel</div>
-                    </div>
+                    </label>
                 </div>
             </div>
             <BaseTable :showFormEdit="handleShowFormEdit" :data="EmployeeStore.getData"
                 :fieldRender="fieldRenderEmployee" :idRow="'employeeId'" @delete-row="handleShowConfirmDelete"
                 :listItemSelected="EmployeeStore.idSelected" :handleSelectItem="EmployeeStore.selectItem"
-                :handleToggleAll="EmployeeStore.toggleSelectAll" />
+                :handleToggleAll="EmployeeStore.toggleSelectAll" @duplicate-row="handleDuplicateItem" />
 
             <BasePaging :pageNumberRender="EmployeeStore.pageNumberRender" :currentPage="EmployeeStore.pageNumber"
                 :totalRecord="EmployeeStore.totalRecord" :changePageNumber="changePageNumber"
@@ -53,13 +65,10 @@
         </div>
 
         <EmployeeForm v-if="EmployeeFormStore.isShowForm" />
-        <BasePopup :methodAccept="hidePopup" v-if="EmployeeFormStore.errorForm" :message="EmployeeFormStore.errorForm"
-            :type="'error-popup'" :textAccept="'Đóng'">
-            <div class="misa-popup-icon misa-icon misa-popup-icon-error-form"></div>
-        </BasePopup>
 
-        <BasePopup :methodCancel="handleCancelDelete" :methodAccept="handleDeleteEmployee" :message="messageConfirm"
-            :textAccept="'Có'" :type="'confirm-delete'" v-if="isShowConfirm">
+        <BasePopup :horizontalButton="'space-between'" :methodCancel="handleCancelDelete"
+            :methodAccept="handleDeleteEmployee" :message="messageConfirm" :textAccept="'Có'" :type="PopupMode.CONFIRM_DELETE"
+            v-if="isShowConfirm">
             <div :class="{ 'misa-popup-icon': true, 'misa-icon': true }"></div>
         </BasePopup>
     </div>
@@ -68,12 +77,12 @@
 <script>
 import { ref } from "vue"
 import { fieldRenderEmployee } from "../assets/Resource/static/fieldRender"
-import { FormMode, ToastMode,DeleteMode } from "../Enum/Enum"
+import { DeleteMode, FormMode, PopupMode, ToastMode } from "../Enum/Enum"
 import EmployeeForm from "../forms/EmployeeForm.vue"
+import { Resource } from "../Resource/Resource"
 import { appStore } from "../stores/AppStore"
 import { employeeFormStore } from "../stores/forms/EmployeeForm"
 import { employeeStore } from "../stores/Pages/EmployeeStore"
-import {Resource} from "../Resource/Resource"
 
 export default {
     components: { EmployeeForm },
@@ -104,6 +113,8 @@ export default {
             AppStore,
             EmployeeFormStore,
             DeleteMode,
+            ToastMode,
+            PopupMode
         }
     },
 
@@ -140,18 +151,10 @@ export default {
          * Author : Lê Mạnh Hùng (15/7/2022)
          * @param {*} state trạng thái của form (true-hiện, false-ẩn)
          */
-        async setStateForm(state) {
+        setStateForm(state) {
             this.EmployeeFormStore.formMode = FormMode.FORM_ADD
-            await this.EmployeeFormStore.initForm()
+            this.EmployeeFormStore.initForm()
             this.EmployeeFormStore.isShowForm = state
-        },
-
-        /**
-         * Func : ẩn pop up báo lỗi của form
-         * Author : Lê Mạnh Hùng (18/7/2022)
-         */
-        hidePopup() {
-            this.EmployeeFormStore.errorForm = ""
         },
 
         /**
@@ -162,7 +165,7 @@ export default {
         async handleShowFormEdit(id) {
             this.EmployeeFormStore.formMode = FormMode.FORM_EDIT
             this.EmployeeFormStore.idEmployeeEdit = id
-            await this.EmployeeFormStore.initForm()
+            await this.EmployeeFormStore.initForm(id)
             this.EmployeeFormStore.isShowForm = true
         },
 
@@ -233,6 +236,17 @@ export default {
             }
 
             this.isShowConfirm = false
+        },
+
+        /**
+         * Func : Xử lý show form duplicate
+         * Author : Lê Mạnh Hùng (13/8/2022)
+         * @param {*} id của đối tượng muốn duplicate
+         */
+        async handleDuplicateItem(id) {
+            this.EmployeeFormStore.formMode = FormMode.FORM_DUPLICATE
+            await this.EmployeeFormStore.initForm(id)
+            this.EmployeeFormStore.isShowForm = true
         }
     }
 }

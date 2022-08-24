@@ -3,9 +3,9 @@
         <div class="misa-label-field">{{ label }} <span v-if="fieldRequired" style="color:red">*</span></div>
         <div @keyup="handleKeyupDropdown"
             :class="{ 'misa-dropdown': true, 'misa-field-focus': isFocus, 'misa-dropdown-show-list': isShowList, 'misa-field-error': error }">
-            <input :tabIndex="tabIndex" :value="valueInput" @focus="focusInput" @blur="blurInput"
-                type="text" @keyup="handleKeyup" class="misa-dropdown-input" @input="handleAutoComplete" />
-            <div @click="toggleList" class="misa-dropdown-icon"><span class="misa-icon"></span></div>
+            <input :tabIndex="tabIndex" :value="valueInput" @focus="focusInput" @blur="blurInput" type="text"
+                @keydown="handleKeyup" class="misa-dropdown-input" @input="handleAutoComplete" />
+            <div @click="toggleList" class="misa-dropdown-arrow-icon"><span class="misa-icon"></span></div>
             <div class="misa-dropdown-list">
                 <table border="0" cellspacing="0">
                     <thead>
@@ -17,9 +17,8 @@
                     </thead>
                     <tbody>
                         <tr @click="handleClickChangeValue(item)"
-                            :class="{ 'misa-dropdown-item-highlight': isSelected(item)}"
-                            v-for="(item, index) in listItem" :key="index" :tabIndex="tabIndex"
-                            @keyup="e => handleKeyupItem(e, item)">
+                            :class="{ 'misa-dropdown-item-highlight': isSelected(item) }"
+                            v-for="(item, index) in listItem" :key="index">
                             <td v-for="(field, index) in listFieldRender" :key="index" :class="field['TextPosition']">
                                 {{ item[field["FieldName"]] }}
                             </td>
@@ -34,6 +33,7 @@
 
 <script>
 import axios from 'axios';
+import { CommonJS } from '../../JS/Common/Common';
 export default {
     name: "BaseDropdown",
     data() {
@@ -47,11 +47,11 @@ export default {
             //item được chọn
             itemSelected: {},
             //value của input
-            valueInput:"",
+            valueInput: "",
             //data ban đầu
-            storeList:[],
-            timer:null,
-            indexFocus:null
+            storeList: [],
+            timer: null,
+            indexFocus: null
         }
     },
     props: {
@@ -84,7 +84,6 @@ export default {
         value(newValue, oldValue) {
             if (newValue == "") {
                 this.itemSelected = {}
-                this.valueInput = ""
             }
         },
         listItem(newValue, oldValue) {
@@ -93,7 +92,7 @@ export default {
             }
         },
         itemSelected(newValue, oldValue) {
-            if(newValue){
+            if (newValue) {
                 this.listItem = this.storeList
             }
         }
@@ -113,7 +112,7 @@ export default {
                     .catch(err => console.log(err))
 
                 const item = this.listItem.find(it => it[this.fieldName] == this.value)
-                if (item){
+                if (item) {
                     this.itemSelected = item
                     this.valueInput = item[this.fieldDisplay]
                 }
@@ -125,6 +124,7 @@ export default {
          * Author : Lê Mạnh Hùng (15/7/2022)
          */
         focusInput() {
+            this.isShowList = true
             this.isFocus = true
         },
 
@@ -132,10 +132,12 @@ export default {
          * Func : thay đổi trạng thái cho input khi blur (đổi màu border)
          * Author : Lê Mạnh Hùng (15/7/2022)
          */
-        blurInput() {
+        blurInput(e) {
+            if (e.relatedTarget.className == "misa-input")
+                this.isShowList = false
             this.isFocus = false
-            if(this.valueInput && this.itemSelected[this.fieldDisplay] == undefined){
-                this.handleBlur(false,this.fieldName);
+            if (this.valueInput && this.itemSelected[this.fieldDisplay] == undefined) {
+                this.handleBlur(false, this.fieldName);
             }
             else
                 this.handleBlur(this.value, this.fieldName)
@@ -166,7 +168,7 @@ export default {
          */
         handleClickChangeValue(item) {
             this.itemSelected = item
-            this.valueInput =item [this.fieldDisplay]
+            this.valueInput = item[this.fieldDisplay]
             this.isShowList = false
             this.changeValue(item[this.fieldName], this.fieldName)
         },
@@ -176,8 +178,8 @@ export default {
          * Author : Lê Mạnh Hùng (18/7/2022)
          */
         handleKeyupDropdown(e) {
-            if (e.key == "Enter") {
-                this.isShowList = !this.isShowList
+            if (e.key == "Escape" || e.key == "Enter") {
+                this.isShowList = false
             }
         },
 
@@ -189,15 +191,17 @@ export default {
         handleAutoComplete(e) {
             this.valueInput = e.target.value;
             const value = e.target.value.trim();
-            this.listItem = this.storeList.filter(item => item[this.fieldDisplay].trim().toLowerCase().search(value.toLowerCase()) > -1)
-            
+            this.listItem = this.storeList.filter(item =>
+                CommonJS.removeVietnameseTones(item[this.fieldDisplay].trim().toLowerCase()).search(CommonJS.removeVietnameseTones(value.toLowerCase())) > -1)
+
             if (value != "" && this.listItem.length > 0) {
                 this.isShowList = true
             } else {
                 this.isShowList = false
             }
 
-            const itemSame = this.storeList.find(item => item[this.fieldDisplay].trim().toLowerCase() == value.toLowerCase())
+            const itemSame = this.storeList.find(item =>
+                CommonJS.removeVietnameseTones(item[this.fieldDisplay].trim().toLowerCase()) == CommonJS.removeVietnameseTones(value.toLowerCase()))
 
             if (this.timer) {
                 clearTimeout(this.timer)
@@ -206,12 +210,12 @@ export default {
             if (itemSame != undefined) {
                 this.timer = setTimeout(() => {
                     this.itemSelected = itemSame
-                    this.valueInput = itemSame[this.fieldDisplay]
+                    this.valueInput = itemSame[this.fieldDisplay].trim()
                     this.changeValue(itemSame[this.fieldName], this.fieldName)
                     this.isShowList = false
-                },500)
-            }else{
-                this.changeValue("",this.fieldName)
+                }, 500)
+            } else {
+                this.changeValue("", this.fieldName)
             }
         },
 
@@ -220,9 +224,9 @@ export default {
          * Author : Lê Mạnh Hùng (3/8/2022)
          * @param {*} item focus
          */
-        handleArrowChangeValue(item){
+        handleArrowChangeValue(item) {
             this.itemSelected = item
-            this.valueInput =item [this.fieldDisplay]
+            this.valueInput = item[this.fieldDisplay]
             this.changeValue(item[this.fieldName], this.fieldName)
         },
 
@@ -231,33 +235,33 @@ export default {
          * Author : Lê Mạnh Hùng (3/8/2022)
          * @param {*} e đối số mặc định 
          */
-        handleKeyup(e){
-            if(e.key == "ArrowDown"){
+        handleKeyup(e) {
+            if (e.key == "ArrowDown") {
                 this.isShowList = true
                 var index = this.listItem.indexOf(this.itemSelected)
 
-                if(index != -1){
-                    if(index == this.listItem.length - 1){
+                if (index != -1) {
+                    if (index == this.listItem.length - 1) {
                         this.handleArrowChangeValue(this.listItem[0])
-                    }else{
+                    } else {
                         this.handleArrowChangeValue(this.listItem[index + 1])
                     }
-                }else{
+                } else {
                     this.handleArrowChangeValue(this.listItem[0])
                 }
             }
 
-            if(e.key == "ArrowUp"){
+            if (e.key == "ArrowUp") {
                 this.isShowList = true
                 var index = this.listItem.indexOf(this.itemSelected)
 
-                if(index != -1){
-                    if(index == 0){
+                if (index != -1) {
+                    if (index == 0) {
                         this.handleArrowChangeValue(this.listItem[this.listItem.length - 1])
-                    }else{
+                    } else {
                         this.handleArrowChangeValue(this.listItem[index - 1])
                     }
-                }else{
+                } else {
                     this.handleArrowChangeValue(this.listItem[this.listItem.length - 1])
                 }
             }

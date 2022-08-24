@@ -1,8 +1,9 @@
 import axios from 'axios'
 import { defineStore } from 'pinia'
 import { API } from '../../assets/Resource/api'
-import { DeleteMode } from '../../Enum/Enum'
+import { DeleteMode, ToastMode } from '../../Enum/Enum'
 import { CommonJS } from '../../JS/Common/Common'
+import { Resource } from '../../Resource/Resource'
 
 export const employeeStore = defineStore({
   id: 'EmployeeStore',
@@ -30,7 +31,13 @@ export const employeeStore = defineStore({
     //status ẩn hiện của chức năng xóa nhiều
     isShowInteractMulti: false,
     //trạng thái xóa
-    deleteMode: DeleteMode.ONE
+    deleteMode: DeleteMode.ONE,
+    //biến dùng làm delay search
+    searchTimer:null,
+    //kiểu của toast
+    typeToast:ToastMode.ERROR,
+    //message toast
+    toastMessage:''
   }),
   getters: {
     getData: (state) => state.data,
@@ -51,6 +58,7 @@ export const employeeStore = defineStore({
     async loadData() {
       const api = this.getApi
       this.idSelected = []
+      this.isSelectAll = false
 
       await axios.get(api)
         .then(res => {
@@ -62,6 +70,9 @@ export const employeeStore = defineStore({
           this.pageNumberRender = CommonJS.getListPageNumber(totalPage, this.pageNumber)
         })
         .catch(err => {
+          this.typeToast = ToastMode.ERROR
+          this.toastMessage = Resource.errorMessage
+          setTimeout(() => this.toastMessage = "", 3000)
           console.log(err)
         })
     },
@@ -92,10 +103,19 @@ export const employeeStore = defineStore({
      * Author : Lê Mạnh Hùng (15/7/2022)
      * @param {*} keyword từ khóa tìm kiếm
      */
-    async search(keyword) {
-      this.employeesFilter = keyword
-      this.pageNumber = 1
-      await this.loadData()
+    search(keyword) {
+      try {
+        if(this.searchTimer)
+          clearTimeout(this.searchTimer);
+  
+        this.searchTimer = setTimeout(async () => {
+          this.employeesFilter = keyword
+          this.pageNumber = 1
+          await this.loadData()
+        },500)
+      } catch (error) {
+        console.log(error);
+      }
     },
 
     /**
@@ -153,6 +173,7 @@ export const employeeStore = defineStore({
           console.log(res)
           this.idSelected = []
           this.deleteMode = DeleteMode.ONE
+          this.isShowInteractMulti = false
           result = res.data
         }).catch(err => {
           console.log(err)
@@ -174,6 +195,14 @@ export const employeeStore = defineStore({
       }
 
       this.isSelectAll = !this.isSelectAll
+    },
+
+    /**
+     * Func : Xuất khẩu dữ liệu
+     * Author : Lê Mạnh Hùng (13/8/2022)
+     */
+    exportData(){
+      window.open(`${this.baseApi}/ExportData`,"_parent");
     }
   }
 })

@@ -4,11 +4,11 @@
         <div class="misa-radio-group">
             <div @click="handleChangeValue(item['value'])" 
                 @keyup="e => handleKeyupChangeValue(e, item['value'])"
-                :tabIndex="tabIndex" v-for="(item,index) in listItem" 
+                v-for="(item,index) in listItem" 
                 :key="index" 
                 :class="{'misa-radio-item':true,'misa-radio-item-selected':isSelected(item['value'])}"
             >
-                <div class="misa-radio-item-out">
+                <div :tabIndex="tabIndex" class="misa-radio-item-out">
                     <div class="misa-radio-item-in"></div>
                 </div>
                 <div class="misa-radio-display">{{item["display"] ? item["display"] : "?"}}</div>

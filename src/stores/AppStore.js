@@ -8,8 +8,9 @@ export const appStore = defineStore({
     isShowSlidebar: true,
     //status loading
     isLoading: false,
-    //thông báo của toast message
-    toastMessage: "",
+    //thông báo toast
+    toastMessage:"",
+    //kiểu toast
     typeToast:ToastMode.SUCCESS
   }),
   getters: {

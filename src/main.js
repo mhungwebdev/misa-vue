@@ -12,10 +12,10 @@ import BasePopup from "./components/Base/BasePopup.vue"
 import BaseRadioGroup from "./components/Base/BaseRadioGroup.vue"
 import BaseSlidebarItem from "./components/Base/BaseSlidebarItem.vue"
 import BaseTable from "./components/Base/BaseTable.vue"
-import BaseToast from "./components/Base/BaseToast.vue"
 import 'v-calendar/dist/style.css';
 import VCalendar from 'v-calendar';
 import {DatePicker } from "v-calendar"
+import BaseToast from "./components/Base/BaseToast.vue"
 
 // Use plugin with defaults
 import App from './App.vue'
@@ -38,7 +38,7 @@ app.component("BasePopup", BasePopup)
 app.component("BaseRadioGroup", BaseRadioGroup)
 app.component("BaseSlidebarItem", BaseSlidebarItem)
 app.component("BaseTable", BaseTable)
-app.component("BaseToast", BaseToast)
 app.component('DatePicker', DatePicker)
+app.component("BaseToast",BaseToast);
 
 app.mount('#app')

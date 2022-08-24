@@ -85,6 +85,8 @@ export class CommonJS {
     static compareDate(dateIn1, dateIn2) {
         const date1 = new Date(dateIn1)
         const date2 = new Date(dateIn2)
+        date1.setHours(7)
+        date2.setHours(7)
 
         if (date1.getTime() === date2.getTime())
             return true
@@ -152,5 +154,66 @@ export class CommonJS {
     static createDateDDMMYYYY(date){
         const [day, month, year] = date.split("/")
         return new Date(year, month - 1, day,7);
+    }
+
+    /**
+     * Func : Bỏ dấu cho chuỗi
+     * Author : Lê Mạnh Hùng (19/8/2022)
+     * @param {*} str chuỗi muốn bỏ dấu
+     * @returns chuỗi đã bỏ dấu
+     */
+    static removeVietnameseTones(str) {
+        str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g,"a"); 
+        str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g,"e"); 
+        str = str.replace(/ì|í|ị|ỉ|ĩ/g,"i"); 
+        str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g,"o"); 
+        str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g,"u"); 
+        str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g,"y"); 
+        str = str.replace(/đ/g,"d");
+        str = str.replace(/À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ/g, "A");
+        str = str.replace(/È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ/g, "E");
+        str = str.replace(/Ì|Í|Ị|Ỉ|Ĩ/g, "I");
+        str = str.replace(/Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ/g, "O");
+        str = str.replace(/Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ/g, "U");
+        str = str.replace(/Ỳ|Ý|Ỵ|Ỷ|Ỹ/g, "Y");
+        str = str.replace(/Đ/g, "D");
+        // Some system encode vietnamese combining accent as individual utf-8 characters
+        // Một vài bộ encode coi các dấu mũ, dấu chữ như một kí tự riêng biệt nên thêm hai dòng này
+        str = str.replace(/\u0300|\u0301|\u0303|\u0309|\u0323/g, ""); // ̀ ́ ̃ ̉ ̣  huyền, sắc, ngã, hỏi, nặng
+        str = str.replace(/\u02C6|\u0306|\u031B/g, ""); // ˆ ̆ ̛  Â, Ê, Ă, Ơ, Ư
+        // Remove extra spaces
+        // Bỏ các khoảng trắng liền nhau
+        str = str.replace(/ + /g," ");
+        str = str.trim();
+        // Remove punctuations
+        // Bỏ dấu câu, kí tự đặc biệt
+        str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`|-|{|}|\||\\/g," ");
+        return str;
+    }
+
+    /**
+     * Func : Thay đổi ngày (cộng - trừ)
+     * Author : Lê Mạnh Hùng (22/8/2022)
+     * @param {*} date ngày muốn thay đổi
+     * @param {*} dayChange số ngày thay đổi
+     * @param {*} calcMode phép toán (calcMode = 1 phép cộng, calcMode = 0 phép trừ)
+     */
+    static calcDate(date, dayChange, calcMode){
+        try {
+            const newDate = new Date(date)
+            const day = newDate.getDate()
+
+            if(calcMode == 1){
+                newDate.setDate(day + dayChange)
+            }
+    
+            if(calcMode == 0){
+                newDate.setDate(day - dayChange)
+            }
+
+            return newDate
+        } catch (error) {
+            console.log(error);
+        }
     }
 }

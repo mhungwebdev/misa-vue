@@ -55,6 +55,14 @@
     box-sizing: border-box;
     text-overflow: ellipsis;
     overflow: hidden;
+    min-width: 120px;
+    white-space: nowrap;
+}
+
+.misa-table td:hover {
+    text-overflow:clip;
+    white-space: wrap;
+    word-break: break-all;
 }
 
 .misa-table th {
@@ -101,72 +109,17 @@
     width: 40px;
     position: sticky;
     left: 0px;
-    z-index:2
+    z-index:2;
+    border-left: none;
 }
 
 .misa-table td:nth-child(2), .misa-table th:nth-child(2) {
-    min-width: 183px;
-    max-width: 183px;
+    min-width: 120px;
+    max-width: 120px;
     width: 183px;
     position: sticky;
     left: 40px;
     z-index:2
-}
-
-.misa-table td:nth-child(3),th:nth-child(3) {
-    min-width: 196px;
-    max-width: 196px;
-    width: 196px;
-}
-
-.misa-table td:nth-child(4),th:nth-child(4) {
-    min-width: 137px;
-    max-width: 137px;
-    width: 137px;
-}
-
-.misa-table td:nth-child(5),th:nth-child(5) {
-    min-width: 114px;
-    max-width: 114px;
-    width: 114px;
-    padding: 0px;
-}
-
-.misa-table td:nth-child(6),th:nth-child(6) {
-    min-width: 137px;
-    max-width: 137px;
-    width: 137px;
-}
-
-.misa-table td:nth-child(7),th:nth-child(7) {
-    min-width: 143px;
-    max-width: 143px;
-    width: 143px;
-}
-
-.misa-table td:nth-child(8),th:nth-child(8) {
-    min-width: 244px;
-    max-width: 244px;
-    width: 244px;
-}
-
-.misa-table td:nth-child(9),th:nth-child(9) {
-    min-width: 208px;
-    max-width: 208px;
-    width: 208px;
-}
-
-.misa-table td:nth-child(10),th:nth-child(10) {
-    min-width: 189px;
-    max-width: 189px;
-    width: 189px;
-}
-
-.misa-table td:nth-child(11), th:nth-child(11) {
-    min-width: 250px;
-    max-width: 250px;
-    width: 250px;
-    border-right: none;
 }
 
 .misa-table tbody tr:hover td {

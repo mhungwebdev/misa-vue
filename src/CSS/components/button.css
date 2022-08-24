@@ -2,7 +2,6 @@
     color: #fff;
     background-color: #2ca01c;
     padding:0px 10px;
-    /* display: inline-block; */
     position: relative;
 }
 
@@ -12,8 +11,12 @@
     white-space: nowrap;
 }
 
-.misa-button-default:hover{
+.misa-button-default:hover, .misa-button-default:focus-visible{
     background-color: #35bf22;
+}
+
+.misa-button-default:focus-visible{
+    outline: none;
 }
 
 .misa-button-default:active{
@@ -28,8 +31,12 @@
     font-weight: 600;
 }
 
-.misa-button-outline:hover{
+.misa-button-outline:hover, .misa-button-outline:focus-visible{
     background-color:#d2d3d6
+}
+
+.misa-button-outline:focus-visible {
+    outline: none;
 }
 
 .misa-button-outline:active{

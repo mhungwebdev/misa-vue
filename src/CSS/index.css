@@ -54,12 +54,12 @@ input {
 
 .misa-button {
     border-radius: var(--border-radius-btn);
-    /* height: var(--primary-button-height); */
-    /* line-height: var(--primary-button-height); */
     min-width: 60px;
     text-align: center;
     cursor: pointer;
-    padding:8px 16px !important
+    padding:0px 16px !important;
+    height: 34px;
+    line-height: 34px;
 }
 
 .misa-icon {
